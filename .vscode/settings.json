@@ -1,0 +1,31 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": false,
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "cpp.formatting": "clangFormat",
+    "cpp.clang_format_style": "file",
+    "cpp.clang_format_fallbackStyle": "Google",
+    "cpp.clang_format_executable": "/usr/bin/clang-format",
+    "files.associations": {
+        "*.cpp": "cpp",
+        "*.h": "cpp",
+        "*.hpp": "cpp",
+        "*.cc": "cpp",
+        "*.cxx": "cpp"
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.intelliSenseEngine": "default",
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.formatOnSave": true
+    },
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.formatOnSave": true
+    }
+}

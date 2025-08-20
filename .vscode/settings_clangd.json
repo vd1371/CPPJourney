@@ -1,0 +1,31 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": false,
+  "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+  "clangd.arguments": [
+    "--clang-format-style=file",
+    "--background-index",
+    "--completion-style=detailed"
+  ],
+  "files.associations": {
+    "*.cpp": "cpp",
+    "*.h": "cpp",
+    "*.hpp": "cpp",
+    "*.cc": "cpp",
+    "*.cxx": "cpp"
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.cStandard": "c11",
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    "editor.formatOnSave": true
+  },
+  "[c]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    "editor.formatOnSave": true
+  }
+}
