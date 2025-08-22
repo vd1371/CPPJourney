@@ -77,6 +77,63 @@ struct BadOrder {
 }; // May have padding between symbol and timestamp
 ```
 
+#### Volatile Variables
+The `volatile` keyword is crucial in HFT systems where variables may be modified by external sources like hardware interrupts, memory-mapped I/O, or signal handlers:
+
+```cpp
+// Market data variables that change asynchronously
+volatile double last_price = 0.0;        // Updated by market data feed
+volatile bool market_open = false;       // Updated by market status monitor
+volatile uint64_t message_count = 0;     // Updated by message handler
+
+// Hardware register access (memory-mapped I/O)
+volatile uint32_t* fpga_status = (uint32_t*)0x80000000;  // FPGA status register
+volatile uint32_t* network_buffer = (uint32_t*)0x90000000; // Network card buffer
+
+// Example: Waiting for market data update
+void wait_for_price_update() {
+    volatile bool price_updated = false;
+    
+    // Without volatile, compiler might optimize this into infinite loop
+    while (!price_updated) {
+        // Check if new price data arrived
+        if (*fpga_status & 0x01) {  // Check status bit
+            price_updated = true;
+            last_price = read_market_price();
+        }
+    }
+}
+
+// Example: Signal handling in trading system
+volatile sig_atomic_t shutdown_requested = 0;
+
+void signal_handler(int signal) {
+    shutdown_requested = 1;  // Safe to modify in signal handler
+}
+
+// Main trading loop
+void trading_loop() {
+    while (!shutdown_requested) {  // Volatile ensures fresh read
+        process_market_data();
+        execute_trading_strategy();
+    }
+}
+```
+
+**Key Points:**
+- **Prevents optimization**: Compiler won't cache volatile variables in registers
+- **Forces memory access**: Every read/write goes directly to memory
+- **Signal safety**: Use `volatile sig_atomic_t` for signal handler communication
+- **Hardware interface**: Essential for memory-mapped hardware registers
+- **Not thread-safe**: `volatile` doesn't provide atomic operations or thread safety
+
+**HFT Applications:**
+- Market data feeds that update asynchronously
+- FPGA communication and status registers
+- Network card buffer monitoring
+- Interrupt-driven event handling
+- Emergency shutdown signals
+
 ### 2. Variables and Declaration
 
 #### Variable Declaration and Initialization
