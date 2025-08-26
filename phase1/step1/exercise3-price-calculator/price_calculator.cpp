@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 
 class PriceCalculator {
 private:
@@ -50,6 +52,25 @@ public:
             totalVolume += bid.second;
             totalPriceVolume += bid.first * bid.second;
         }
+        return totalPriceVolume / totalVolume;
+    }
+
+    // Calculate VWAP using pointer arithmetic
+    double calculateVWAPWithPointers(const std::vector<std::pair<double, int>>& bids) {
+        if (bids.empty()) return 0.0;
+        
+        double totalVolume = 0;
+        double totalPriceVolume = 0;
+        
+        const std::pair<double, int>* ptr = bids.data();
+        const std::pair<double, int>* endPtr = bids.data() + bids.size();
+        
+        while (ptr < endPtr) {
+            totalVolume += ptr->second;
+            totalPriceVolume += ptr->first * ptr->second;
+            ptr++;
+        }
+        
         return totalPriceVolume / totalVolume;
     }
 
@@ -167,6 +188,7 @@ public:
             std::cout << *ptr << " ";
         }
         std::cout << "\n";
+    }
 };
 
 int main() {
@@ -194,4 +216,4 @@ int main() {
     std::cout << "VWAP using pointer arithmetic: " << std::fixed << std::setprecision(2) << vwap2 << "\n";
     
     return 0;
-};
+}
